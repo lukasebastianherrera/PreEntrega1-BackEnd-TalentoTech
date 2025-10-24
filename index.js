@@ -26,11 +26,18 @@ if(metodo.toUpperCase()  == "POST" && parametro.toLowerCase() == "products"){
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(product)
-})
+    })
     .then(response => response.json())
     .then(data => console.log(data));
 } 
-if(metodo.toUpperCase()  == "DELETE"){
-    console.log(`El item con el id: ${parametro} se eliminó con éxito`)
+if(metodo.toUpperCase()  == "DELETE" && parametro.startsWith("products/")){
+    const separador = parametro.split("/");
+    const [, id ] = separador;
+
+    fetch(`https://fakestoreapi.com/products/${id}`, {
+    method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => console.log(data));
 }
 
